@@ -1,13 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 
 namespace APIPagingFilterMapperEx.Models
 {
-	public class CompanyContext:DbContext
+	//public class CompanyContext:DbContext
+	public class CompanyContext :IdentityDbContext<AppUser>
 	{
 		public CompanyContext(DbContextOptions<CompanyContext> options) : base(options) { }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			base.OnModelCreating(modelBuilder); //must
+
 			modelBuilder.Entity<Category>().HasData(
 				 new Category()
 				 {

@@ -12,6 +12,8 @@ namespace APIPagingFilterMapperEx.Configuration
 			CreateMap<Product, ProductDisplayDto>().ForMember(p=>p.CategoryName,q=>q.MapFrom(t=>t.Category.CategoryName)).ReverseMap();
 
 			CreateMap<Product, ProductUpdateDto>().ReverseMap();
+
+			CreateMap<AppUser, RegistrationDto>().ReverseMap();
 		}
 	}
 }
