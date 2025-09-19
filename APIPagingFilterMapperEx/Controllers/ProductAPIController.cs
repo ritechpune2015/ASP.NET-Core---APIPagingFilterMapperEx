@@ -2,12 +2,14 @@
 using APIPagingFilterMapperEx.Helpers;
 using APIPagingFilterMapperEx.Models;
 using APIPagingFilterMapperEx.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIPagingFilterMapperEx.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize] //every controller 
 	public class ProductAPIController : ControllerBase
 	{
 		IProductRepo repo;

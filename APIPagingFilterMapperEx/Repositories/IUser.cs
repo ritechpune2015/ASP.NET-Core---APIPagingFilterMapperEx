@@ -6,5 +6,6 @@ namespace APIPagingFilterMapperEx.Repositories
 	public interface IUser
 	{
 		Task<IdentityResult> Register(RegistrationDto rec);
+		Task<LoginResultDto> Login(LoginDto rec);
 	}
 }

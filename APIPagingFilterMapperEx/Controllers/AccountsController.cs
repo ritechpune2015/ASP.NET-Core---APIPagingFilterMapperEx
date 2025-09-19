@@ -32,5 +32,21 @@ namespace APIPagingFilterMapperEx.Controllers
 				return BadRequest(errors);
 			}
 		}
+
+
+		[HttpPost("signin")]
+		public async Task<IActionResult> SignIn(LoginDto rec)
+		{
+
+			var res=await this.userrepo.Login(rec);
+			if (res.IsSuccess)
+			{
+				return Ok(res);
+			}
+			else
+			{
+				return Unauthorized(res);
+			}
+		}
 	}
 }
