@@ -1,6 +1,5 @@
 ﻿using APIPagingFilterMapperEx.Dtos;
 using APIPagingFilterMapperEx.Helpers;
-using APIPagingFilterMapperEx.Models;
 using APIPagingFilterMapperEx.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +16,13 @@ namespace APIPagingFilterMapperEx.Controllers
 		{ 
 		 this.repo = repo;
 		}
+
+		/// <summary>
+		/// Retrive Product Info with filter, sorting and paging
+		/// </summary>
+		/// <param name="query"></param>
+		/// <returns> List of Products</returns>
+
 		[HttpGet]
 		public async Task<IActionResult> Index([FromQuery]QueryObject query)
 		{
@@ -25,6 +31,12 @@ namespace APIPagingFilterMapperEx.Controllers
 				return NotFound();
 			return Ok(res);
 		}
+
+		/// <summary>
+		/// Create New Product
+		/// </summary>
+		/// <param name="rec"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		public async Task<IActionResult> Create(ProductDto rec)
@@ -36,6 +48,12 @@ namespace APIPagingFilterMapperEx.Controllers
 			return Ok(rec); 
 		}
 
+
+		/// <summary>
+		/// Modify Existing Product
+		/// </summary>
+		/// <param name="rec"></param>
+		/// <returns></returns>
 		[HttpPut]
 		public async Task<IActionResult> Update(ProductUpdateDto rec)
 		{
@@ -45,6 +63,13 @@ namespace APIPagingFilterMapperEx.Controllers
 			await this.repo.Update(rec);
 			return Ok(rec);
 		}
+
+
+		/// <summary>
+		/// Delete Existing Product
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 
 		[HttpDelete]
 		public async Task<IActionResult> Delete(Int64 id)

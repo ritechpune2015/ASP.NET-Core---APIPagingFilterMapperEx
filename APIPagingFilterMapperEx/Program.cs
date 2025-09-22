@@ -7,12 +7,28 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
+var filename=$"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+var filepath = Path.Combine(AppContext.BaseDirectory,filename);
+
 builder.Services.AddSwaggerGen(
 	 opt => {
-		 opt.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo(){Title="Demo API",Version="v1" });
+		 opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+		 {
+			 Title = "Demo API",
+			 Version = "v1",
+			 Description = "CURD API with pagiing filteration etc.",
+			 Contact =
+			 new OpenApiContact()
+			 {
+				 Email = "achyut@revolutioninfosystems.com",
+				 Name = "Achyut",
+				 Url = new Uri("https://www.revolutioninfosystems.com")
+			 }
+		 });
 
 		 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 		 {
@@ -38,7 +54,21 @@ builder.Services.AddSwaggerGen(
 		}
 	});
 
+		 opt.IncludeXmlComments(filepath);
 
+	 }
+	);
+
+builder.Services.AddCors(
+	 opt => {
+		 opt.AddDefaultPolicy(
+			  opt1 =>
+			  {
+				  opt1.AllowAnyMethod();
+				  opt1.AllowAnyOrigin();
+				  opt1.AllowAnyHeader();
+			  }
+			 );
 	 }
 	);
 
@@ -83,6 +113,7 @@ builder.Services.AddScoped<IProductRepo,ProductRepo>();
 builder.Services.AddScoped<IUser, UserRepo>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSwagger();
